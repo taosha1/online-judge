@@ -3,6 +3,9 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
+  <welcome-file-list>
+    <welcome-file>/dist/index.html</welcome-file>
+  </welcome-file-list>
   <display-name>Archetype Created Web Application</display-name>
 <!--<!- 监听器  加载spring的配置文件 默认去webinf加载。但在resource下webinf/classes- &ndash;&gt;-->
   <listener>

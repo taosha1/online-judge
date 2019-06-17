@@ -1,5 +1,7 @@
 import com.tc.dao.AccountDao;
+import com.tc.dao.UserDao;
 import com.tc.domain.Account;
+import com.tc.domain.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -50,8 +52,28 @@ public class TestMybatis {
 
 
     @Test
-    public void test3(){
+    public void test3() throws IOException {
+        InputStream resourceAsStream = Resources.getResourceAsStream("SqlMapConfig.xml");
+        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
+        SqlSession sqlSession = sessionFactory.openSession();
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
 
+        User byId = mapper.findById(1);
 
+        System.out.println(byId);
+    }
+
+    @Test
+    public void test4() throws IOException {
+        InputStream resourceAsStream = Resources.getResourceAsStream("SqlMapConfig.xml");
+        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
+        SqlSession sqlSession = sessionFactory.openSession();
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+        User user = new User();
+        user.setPassword("213123123");
+        user.setUsername("213123213213");
+        user.setStudentId("213123");
+        mapper.addUser(user);
+        sqlSession.commit();
     }
 }

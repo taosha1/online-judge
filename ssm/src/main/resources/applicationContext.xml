@@ -13,17 +13,22 @@
 	http://www.springframework.org/schema/tx
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-<!--    开启 注解的扫描 只处理service和dao层，controller不需要spring框架管理-->
+<!--    开启 注解的扫描 -->
     <context:component-scan base-package="com.tc">
-        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <!--<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>-->
     </context:component-scan>
 
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxUploadSizePerFile" value="40960000"/>
+    </bean>
 <!--  mybatis 整合 将代理类注入ioc容器-->
 
 <!--    连接池-->
     <bean class="com.mchange.v2.c3p0.ComboPooledDataSource" id="dataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql:///db1"/>
+        <property name="jdbcUrl" value="jdbc:mysql:///oj"/>
         <property name="user" value="root"/>
         <property name="password" value="root"/>
     </bean>

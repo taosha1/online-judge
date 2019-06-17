@@ -71,7 +71,7 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/logout", method = RequestMethod.POST ,produces = "text/html;charset=utf-8")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getSession().getId();
         Object user_id = request.getSession().getAttribute("user_id");
@@ -86,7 +86,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
+    @RequestMapping(value = "/register",method = RequestMethod.POST, produces = "text/html;charset=utf-8")
     public String register(@RequestParam("username") String username,@RequestParam("password") String password,@RequestParam("studentId") String studentId) {
         User user = new User();
         user.setUsername(username);
@@ -96,7 +96,7 @@ public class UserController {
         return JSON.toJSONString(result);
     }
 
-    
+
 
 
 }

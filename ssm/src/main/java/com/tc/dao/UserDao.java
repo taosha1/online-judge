@@ -3,7 +3,10 @@ package com.tc.dao;
 import com.tc.domain.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface UserDao {
@@ -16,4 +19,13 @@ public interface UserDao {
 
     @Insert("insert into user_db(studentId,username,password) values (#{studentId},#{username},#{password})")
     void addUser(User user);
+
+    @Update("update user_db set rights=#{rights},passNum=#{passNum},studentId=#{studentId} ,username=#{username},password=#{password}, icon=#{icon},major=#{major},grade=#{grade}, QQ=#{QQ},email=#{email}, sex=#{sex},discription=#{discription} where username=#{username}")
+    int updateUser(User user);
+
+    @Select("select * from user_db where studentId=#{studentId}")
+    User findByStuId(String studentId);
+
+    @Select("select * from user_db order by passNum desc limit 0,#{num}")
+    List<User> findRankLimitOrderByPassNum(int num);
 }

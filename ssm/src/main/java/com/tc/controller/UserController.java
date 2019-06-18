@@ -29,16 +29,16 @@ public class UserController {
             User user = null;
             String username = "";
             for (Cookie c : request.getCookies()) {
-                System.out.println(c.getName()+" "+c.getValue());
+                System.out.println(c.getName() + " " + c.getValue());
                 if (c.getName().equals("username")) {
                     username = c.getValue();
-                    System.out.println(" String username = c.getValue();"+username);
+                    System.out.println(" String username = c.getValue();" + username);
                 }
             }
             user = userService.findByUsername(username);
             if (user.getIcon() == null || user.getIcon().equals("")) {
                 user.setIcon("dist/static/user_icon/no_user.jpg");
-                user.setPassword("");
+//                user.setPassword("");
             }
             return JSON.toJSONString(new Result(true, JSON.toJSONString(user)));
         }
@@ -55,7 +55,7 @@ public class UserController {
         } else {
             if (user.getIcon() == null || user.getIcon().equals("")) {
                 user.setIcon("dist/static/user_icon/no_user.jpg");
-                user.setPassword("");
+//                user.setPassword("");
             }
             String seesion_id = request.getSession().getId();
             request.getSession().setAttribute("user_id", seesion_id);
@@ -71,7 +71,7 @@ public class UserController {
 
     }
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST ,produces = "text/html;charset=utf-8")
+    @RequestMapping(value = "/logout", method = RequestMethod.POST, produces = "text/html;charset=utf-8")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getSession().getId();
         Object user_id = request.getSession().getAttribute("user_id");
@@ -86,8 +86,8 @@ public class UserController {
         }
     }
 
-    @RequestMapping(value = "/register",method = RequestMethod.POST, produces = "text/html;charset=utf-8")
-    public String register(@RequestParam("username") String username,@RequestParam("password") String password,@RequestParam("studentId") String studentId) {
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = "text/html;charset=utf-8")
+    public String register(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("studentId") String studentId) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
@@ -96,7 +96,29 @@ public class UserController {
         return JSON.toJSONString(result);
     }
 
+    @RequestMapping(value = "/showDetailedUser", method = RequestMethod.POST, produces = "text/html;charset=utf-8")
+    public String showDetailedUser(@RequestParam("id") int id) {
+        Result byId = userService.findById(id);
+        return JSON.toJSONString(byId);
+    }
 
+    @RequestMapping(value = "/changeMsg", method = RequestMethod.POST, produces = "text/html;charset=utf-8")
+    public String changeMeg(User user) {
+//        System.out.println("runing123 "+user);
+        Result result = userService.updateUser(user);
+        return JSON.toJSONString(result);
+    }
 
+    @RequestMapping(value = "/confirmPassword", method = RequestMethod.POST, produces = "text/html;charset=utf-8")
+    public String confirmPassword(@RequestParam("studentId") String studentId, @RequestParam("old_password") String old_password, @RequestParam("password") String password) {
+        Result result = userService.changePassword(studentId, old_password, password);
+        return JSON.toJSONString(result);
+    }
+
+    @RequestMapping(value = "/get_resent_rank", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getRankUser(HttpServletRequest request) {
+        Result result = userService.findRankByPage(5);
+        return JSON.toJSON(result).toString();
+    }
 
 }

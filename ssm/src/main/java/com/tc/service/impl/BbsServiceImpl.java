@@ -94,4 +94,14 @@ public class BbsServiceImpl implements BbsService {
             return new Result(false, "BBS数据库为空");
         }
     }
+
+    @Override
+    public Result RemoveBBSById(int id) {
+        int deleteRow = bbsDao.deleteById(id);
+        if (deleteRow != 0) {
+            return new Result(true, "" + deleteRow);
+        } else {
+            return new Result(false, "删除成功");
+        }
+    }
 }

@@ -61,7 +61,7 @@ public class UserController {
             request.getSession().setAttribute("user_id", seesion_id);
             Cookie cookie = new Cookie("JSESSIONID", seesion_id);
             Cookie cookie2 = new Cookie("username", user.getUsername());
-            cookie.setMaxAge(1000 * 60);
+            cookie.setMaxAge(1000 * 600);
             cookie.setPath("/");
             cookie2.setPath("/");
             response.addCookie(cookie);
@@ -116,9 +116,21 @@ public class UserController {
     }
 
     @RequestMapping(value = "/get_resent_rank", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
-    public String getRankUser(HttpServletRequest request) {
+    public String getRankUser() {
         Result result = userService.findRankByPage(5);
         return JSON.toJSON(result).toString();
     }
+    @RequestMapping(value = "/getCount", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getCount() {
+        Result result = userService.findUserCount();
+        return JSON.toJSON(result).toString();
+    }
 
+    @RequestMapping(value = "/getRankUser", method = RequestMethod.GET, produces = "text/html;charset=UTF-8")
+    public String getRankUser2(@RequestParam("pageNum")String pageNum,@RequestParam("rankNum")String rank) {
+        int page = Integer.parseInt(pageNum);
+        int rankNum = Integer.parseInt(rank);
+        Result result = userService.searchRankByPage(page, rankNum);
+        return JSON.toJSON(result).toString();
+    }
 }

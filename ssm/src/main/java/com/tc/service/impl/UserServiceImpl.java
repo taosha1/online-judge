@@ -94,4 +94,26 @@ public class UserServiceImpl implements UserService {
             return new Result(true,JSON.toJSONString(lists));
         }
     }
+
+    @Override
+    public Result findUserCount() {
+        int countNum = userDao.findCount();
+        if (countNum != 0) {
+            return new Result(true, "" + countNum);
+        } else {
+            return new Result(false, "user数据库为空");
+        }
+    }
+
+    @Override
+    public Result searchRankByPage(int page, int rankNum) {
+        List<User> userList = null;
+        int startNum = (page - 1) * rankNum;
+        userList = userDao.findRankLimitOrderByPassNum2(startNum,rankNum);
+        if (userList != null) {
+            return new Result(true, JSON.toJSON(userList).toString());
+        } else {
+            return new Result(false, "没有更多的用户了");
+        }
+    }
 }

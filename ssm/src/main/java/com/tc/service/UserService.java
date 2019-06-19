@@ -17,4 +17,8 @@ public interface UserService {
     Result changePassword(String studentId, String old_password, String password);
 
     Result findRankByPage(int num);
+
+    Result findUserCount();
+
+    Result searchRankByPage(int page, int rankNum);
 }

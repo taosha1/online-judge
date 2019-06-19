@@ -24,14 +24,14 @@ public class NoticController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/get_resent_notic",method = RequestMethod.GET,produces = "text/html;charset=utf-8")
-    public String get_resent_notic(){
+    @RequestMapping(value = "/get_resent_notic", method = RequestMethod.GET, produces = "text/html;charset=utf-8")
+    public String get_resent_notic() {
         Result result = bbsService.get_resent_notic(5);
         return JSON.toJSONString(result);
     }
 
-    @RequestMapping(value = "/showDetailedNotic",method = RequestMethod.GET,produces = "text/html;charset=utf-8")
-    public String showDetailedNotic(@RequestParam("bbsId")String bbsId){
+    @RequestMapping(value = "/showDetailedNotic", method = RequestMethod.GET, produces = "text/html;charset=utf-8")
+    public String showDetailedNotic(@RequestParam("bbsId") String bbsId) {
         Result result = bbsService.findBBSById(bbsId);
         return JSON.toJSONString(result);
     }
@@ -56,7 +56,7 @@ public class NoticController {
                         @RequestParam("bbsId") String bbsId,
                         @RequestParam("msg") String msg,
                         @RequestParam("postDate") String postDate) throws Exception {
-        User user  = userService.findByUsername(username);
+        User user = userService.findByUsername(username);
         Result bbsResult = bbsService.findBBSById(bbsId);
         BBS bbs = JSON.parseObject(bbsResult.getMessage(), BBS.class);
         User_BBS user_bbs = new User_BBS();
@@ -69,8 +69,8 @@ public class NoticController {
     }
 
 
-    @RequestMapping(value = "/getReplys",method = RequestMethod.GET,produces = "text/html;charset=utf-8")
-    public String getReplys(@RequestParam("bbsId")String bbsId){
+    @RequestMapping(value = "/getReplys", method = RequestMethod.GET, produces = "text/html;charset=utf-8")
+    public String getReplys(@RequestParam("bbsId") String bbsId) {
         int id = Integer.parseInt(bbsId);
         Result result = bbsService.findReplyByBBSId(id);
         return JSON.toJSON(result).toString();
@@ -89,5 +89,11 @@ public class NoticController {
         Result result = bbsService.findBBSByPage(page, bbsNum);
         return JSON.toJSON(result).toString();
     }
-    
+
+    @RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String delete(@RequestParam("bbsId")String bbsId) throws Exception {
+        int id = Integer.parseInt(bbsId);
+        Result result = bbsService.RemoveBBSById(id);
+        return JSON.toJSON(result).toString();
+    }
 }

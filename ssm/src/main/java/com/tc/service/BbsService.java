@@ -6,7 +6,7 @@ import com.tc.utils.Result;
 
 public interface BbsService {
 
-    public Result get_resent_notic(int searchNum);
+    Result get_resent_notic(int searchNum);
 
     Result findBBSById(String bbsId);
 
@@ -19,4 +19,6 @@ public interface BbsService {
     Result findBBSByPage(int page, int bbsNum);
 
     Result findBBSCount();
+
+    Result RemoveBBSById(int id);
 }

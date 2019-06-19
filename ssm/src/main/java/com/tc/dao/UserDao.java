@@ -28,4 +28,10 @@ public interface UserDao {
 
     @Select("select * from user_db order by passNum desc limit 0,#{num}")
     List<User> findRankLimitOrderByPassNum(int num);
+
+    @Select("select count(1) from user_db ")
+    int findCount();
+
+    @Select("select * from user_db order by passNum desc limit #{arg0},#{arg1}")
+    List<User> findRankLimitOrderByPassNum2(int startNum, int rankNum);
 }

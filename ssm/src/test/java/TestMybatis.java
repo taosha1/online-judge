@@ -1,11 +1,5 @@
-import com.tc.dao.AccountDao;
-import com.tc.dao.BbsDao;
-import com.tc.dao.UserDao;
-import com.tc.dao.User_BBSDao;
-import com.tc.domain.Account;
-import com.tc.domain.BBS;
-import com.tc.domain.User;
-import com.tc.domain.User_BBS;
+import com.tc.dao.*;
+import com.tc.domain.*;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -124,8 +118,8 @@ public class TestMybatis {
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
         SqlSession sqlSession = sessionFactory.openSession();
         User_BBSDao mapper = sqlSession.getMapper(User_BBSDao.class);
-        List<User_BBS> rankLimitOrderByPassNum = mapper.findUser_BBSByBBSId(8);
-        for (User_BBS user_bbs:rankLimitOrderByPassNum){
+        List<User_BBS> list = mapper.findUser_BBSByBBSId(8);
+        for (User_BBS user_bbs:list){
             System.out.println(user_bbs.getUser().toString());
             System.out.println(user_bbs.getBbs().toString());
         }
@@ -140,5 +134,15 @@ public class TestMybatis {
         mapper.findBBSLimit(1,50);
         sqlSession.commit();
     }
-
+    @Test
+    public void test10() throws IOException {
+        InputStream resourceAsStream = Resources.getResourceAsStream("SqlMapConfig.xml");
+        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
+        SqlSession sqlSession = sessionFactory.openSession();
+        Competition_ProblemDao mapper = sqlSession.getMapper(Competition_ProblemDao.class);
+        List<Competition_Problem> list = mapper.findCompetition_ProblemsByCompetitionId(1);
+        for (Competition_Problem c:list){
+            System.out.println(c);
+        }
+    }
 }

@@ -32,4 +32,7 @@ public interface BbsDao {
 
     @Select("select count(1) from bbs_db")
     int findCount();
+
+    @Delete("delete from bbs_db where id = #{id}")
+    int deleteById(int id);
 }

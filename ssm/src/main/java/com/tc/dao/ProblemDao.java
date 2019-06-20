@@ -1,9 +1,7 @@
 package com.tc.dao;
 
 import com.tc.domain.Problem;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,4 +25,7 @@ public interface ProblemDao {
     @Select("select count(1) from problem_db")
     int findCount();
 
+    @Update("update problem_db set title=#{title}, discription=#{discription} ,inputData=#{inputData},outputData =#{outputData }," +
+            "example =#{example }" )
+    int updataProblem(Problem problem);
 }

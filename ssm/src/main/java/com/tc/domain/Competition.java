@@ -1,6 +1,8 @@
 package com.tc.domain;
 
-public class Competition {
+import java.io.Serializable;
+
+public class Competition implements Serializable{
     private Integer id;
     private User sponsor;
     private String title;

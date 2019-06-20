@@ -44,18 +44,6 @@ public class CompetitionController {
         return JSON.toJSON(result).toString();
     }
 
-//    @RequestMapping(value = "/switchCompetition",method= RequestMethod.POST,produces="text/html;charset=UTF-8")
-//    public String switchCompetition(HttpServletRequest request){
-//        boolean isOpen =Boolean.parseBoolean(request.getParameter("isOpen"));
-//        String competitionId = request.getParameter("competitionId");
-//        int id = Integer.parseInt(competitionId);
-//        Competition competition = new Competition();
-//        competition.setId(id);
-//        competition.setOpen(isOpen);
-//        Result result = competitionService.changeCompetitionMsgByPost(competition);
-//        return JSON.toJSON(result).toString();
-//    }
-
     @RequestMapping(value = "/get_resent_competition",method= RequestMethod.GET,produces="text/html;charset=UTF-8")
     public String get_resent_competition(HttpServletRequest request){
         int searchNum = 5;
